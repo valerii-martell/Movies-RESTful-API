@@ -2,8 +2,11 @@ import datetime
 
 from flask import request
 from flask_restful import Resource
+from marshmallow import ValidationError
+
 from src import api, db
 from src.models import Movie
+from src.schemas import MovieSchema
 
 
 class Smoke(Resource):
@@ -12,53 +15,37 @@ class Smoke(Resource):
 
 
 class MoviesListApi(Resource):
+    movie_schema = MovieSchema()
+
     def get(self, uuid=None):
         if not uuid:
             movies = db.session.query(Movie).all()
-            return [movie.to_dict() for movie in movies], 200
+            return self.movie_schema.dump(movies, many=True), 200
         movie = db.session.query(Movie).filter_by(uuid=uuid).first()
         if not movie:
             return '', 404
-        return movie.to_dict(), 200
+        return self.movie_schema.dump(movie), 200
 
     def post(self):
-        movie_json = request.json
-        if not movie_json:
-            return {'message': 'Wrong data'}, 400
         try:
-            movie = Movie(
-                title=movie_json['title'],
-                release_date=datetime.datetime.strptime(movie_json['release_date'], '%B %d, %Y'),
-                distributed_by=movie_json['distributed_by'],
-                rating=movie_json.get('rating'),
-                length=movie_json.get('length'),
-                description=movie_json.get('description')
-            )
-            db.session.add(movie)
-            db.session.commit()
-        except (ValueError, KeyError):
-            return {'message': 'Wrong data'}, 400
-        return {'message': 'Created successfully', 'uuid': movie.uuid}, 201
+            movie = self.movie_schema.load(request.json, session=db.session)
+        except ValidationError as e:
+            return {'message': "str(e)"}, 400
+        db.session.add(movie)
+        db.session.commit()
+        return self.movie_schema.dump(movie), 201
 
     def put(self, uuid):
-        movie_json = request.json
-        if not movie_json:
-            return {'message': 'Wrong data'}, 400
+        movie = db.session.query(Movie).filter_by(uuid=uuid).first()
+        if not movie:
+            return "", 404
         try:
-            db.session.query(Movie).filter_by(uuid=uuid).update(
-                dict(
-                    title=movie_json['title'],
-                    release_date=datetime.datetime.strptime(movie_json['release_date'], '%B %d, %Y'),
-                    distributed_by=movie_json['distributed_by'],
-                    rating=movie_json.get('rating'),
-                    length=movie_json.get('length'),
-                    description=movie_json.get('description')
-                )
-            )
-            db.session.commit()
-        except (ValueError, KeyError):
-            return {'message': 'Wrong data'}, 400
-        return {'message': 'Updated successfully'}, 200
+            movie = self.movie_schema.load(request.json, instance=movie, session=db.session)
+        except ValidationError as e:
+            return {'message': str(e)}, 400
+        db.session.add(movie)
+        db.session.commit()
+        return self.film_schema.dump(movie), 200
 
     def patch(self, uuid):
         movie = db.session.query(Movie).filter_by(uuid=uuid).first()
