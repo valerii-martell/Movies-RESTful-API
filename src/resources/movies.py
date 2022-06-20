@@ -3,6 +3,7 @@ import datetime
 from flask import request
 from flask_restful import Resource
 from marshmallow import ValidationError
+from sqlalchemy.orm import joinedload, selectinload
 
 from src import db
 from src.database.models import Movie
@@ -14,7 +15,10 @@ class MoviesListApi(Resource):
 
     def get(self, uuid=None):
         if not uuid:
-            movies = db.session.query(Movie).all()
+            movies = db.session.query(Movie).options(
+                joinedload(Movie.actors)
+                # selectinload(Movie.actors)
+            ).all()
             return self.movie_schema.dump(movies, many=True), 200
         movie = db.session.query(Movie).filter_by(uuid=uuid).first()
         if not movie:

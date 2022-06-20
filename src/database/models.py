@@ -21,6 +21,7 @@ class Movie(db.Model):
     length = db.Column(db.Float)
     rating = db.Column(db.Float)
     actors = db.relationship('Actor', secondary=movies_actors, lazy=True, backref=db.backref('movies', lazy=True))
+    # actors = db.relationship('Actor', secondary=movies_actors, lazy='subquery', backref=db.backref('movies', lazy=True))
 
     def __init__(self, title, release_date, description, distributed_by, length, rating, actors=None):
         self.title = title
