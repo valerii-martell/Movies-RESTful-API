@@ -2,6 +2,12 @@ import uuid
 
 from src import db
 
+movies_actors = db.Table(
+    'movies_actors',
+    db.Column('actor_id', db.Integer, db.ForeignKey('actors.id'), primary_key=True),
+    db.Column('movie_id', db.Integer, db.ForeignKey('movies.id'), primary_key=True),
+)
+
 
 class Movie(db.Model):
     __tablename__ = "movies"
@@ -14,8 +20,9 @@ class Movie(db.Model):
     distributed_by = db.Column(db.String(128), nullable=False)
     length = db.Column(db.Float)
     rating = db.Column(db.Float)
+    actors = db.relationship('Actor', secondary=movies_actors, lazy=True, backref=db.backref('movies', lazy=True))
 
-    def __init__(self, title, release_date, description, distributed_by, length, rating):
+    def __init__(self, title, release_date, description, distributed_by, length, rating, actors=None):
         self.title = title
         self.release_date = release_date
         self.uuid = str(uuid.uuid4())
@@ -23,9 +30,13 @@ class Movie(db.Model):
         self.distributed_by = distributed_by
         self.length = length
         self.rating = rating
+        if not actors:
+            self.actors = []
+        else:
+            self.actors = actors
 
     def __repr__(self):
-        return f'Film({self.title}, {self.release_date}, {self.uuid}, {self.distributed_by})'
+        return f'Movie({self.title}, {self.release_date}, {self.uuid}, {self.distributed_by}, {self.rating}, {self.actors}'
 
     def to_dict(self):
         return {
@@ -36,6 +47,7 @@ class Movie(db.Model):
             'description': self.description,
             'length': self.length,
             'rating': self.rating,
+            'actors' : self.actors
         }
 
 
