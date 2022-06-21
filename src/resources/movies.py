@@ -7,12 +7,14 @@ from sqlalchemy.orm import joinedload, selectinload
 
 from src import db
 from src.database.models import Movie
+from src.resources.auth import token_required
 from src.schemas.movies import MovieSchema
 
 
 class MoviesListApi(Resource):
     movie_schema = MovieSchema()
 
+    @token_required
     def get(self, uuid=None):
         if not uuid:
             movies = db.session.query(Movie).options(
