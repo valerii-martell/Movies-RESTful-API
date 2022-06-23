@@ -47,7 +47,7 @@ class MoviesListApi(Resource):
             return {'message': str(e)}, 400
         db.session.add(movie)
         db.session.commit()
-        return self.film_schema.dump(movie), 200
+        return self.movie_schema.dump(movie), 200
 
     def patch(self, uuid):
         movie = MovieService.fetch_movie_by_uuid(db.session, uuid)

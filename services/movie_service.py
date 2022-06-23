@@ -8,8 +8,6 @@ class MovieService:
 
     @classmethod
     def fetch_movie_by_uuid(cls, session, uuid):
-        return cls.fecth_all_movies(session).filter_by(
-            uuid == uuid
-        ).first()
+        return cls.fecth_all_movies(session).filter_by(uuid=uuid).first()
 
 

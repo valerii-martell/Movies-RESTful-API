@@ -93,4 +93,4 @@ class User(db.Model):
 
     @classmethod
     def find_user_by_uuid(cls, uuid):
-        return cls.query.filter_by(uuid == uuid).first()
+        return cls.query.filter_by(uuid=uuid).first()

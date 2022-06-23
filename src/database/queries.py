@@ -34,5 +34,5 @@ from src.database import models
 # print(movies_with_actors)
 
 
-actor = db.session.query(models.Actor).first()
-print(actor.movies)
+# actor = db.session.query(models.Actor).first()
+# print(actor.movies)
