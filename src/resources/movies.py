@@ -14,7 +14,7 @@ from src.schemas.movies import MovieSchema
 class MoviesListApi(Resource):
     movie_schema = MovieSchema()
 
-    @token_required
+    #@token_required
     def get(self, uuid=None):
         if not uuid:
             movies = db.session.query(Movie).options(
