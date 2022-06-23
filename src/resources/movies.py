@@ -5,6 +5,7 @@ from flask_restful import Resource
 from marshmallow import ValidationError
 from sqlalchemy.orm import joinedload, selectinload
 
+from services.movie_service import MovieService
 from src import db
 from src.database.models import Movie
 from src.resources.auth import token_required
@@ -17,12 +18,12 @@ class MoviesListApi(Resource):
     #@token_required
     def get(self, uuid=None):
         if not uuid:
-            movies = db.session.query(Movie).options(
+            movies = MovieService.fecth_all_movies(db.session).options(
                 joinedload(Movie.actors)
                 # selectinload(Movie.actors)
             ).all()
             return self.movie_schema.dump(movies, many=True), 200
-        movie = db.session.query(Movie).filter_by(uuid=uuid).first()
+        movie = MovieService.fetch_movie_by_uuid(db.session, uuid)
         if not movie:
             return '', 404
         return self.movie_schema.dump(movie), 200
@@ -37,7 +38,7 @@ class MoviesListApi(Resource):
         return self.movie_schema.dump(movie), 201
 
     def put(self, uuid):
-        movie = db.session.query(Movie).filter_by(uuid=uuid).first()
+        movie = MovieService.fetch_movie_by_uuid(db.session, uuid)
         if not movie:
             return "", 404
         try:
@@ -49,7 +50,7 @@ class MoviesListApi(Resource):
         return self.film_schema.dump(movie), 200
 
     def patch(self, uuid):
-        movie = db.session.query(Movie).filter_by(uuid=uuid).first()
+        movie = MovieService.fetch_movie_by_uuid(db.session, uuid)
         if not movie:
             return "", 404
         movie_json = request.json
