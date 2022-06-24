@@ -19,7 +19,7 @@ class FakeMovie:
 class TestMovies:
     uuids = []
 
-    @patch('services.movie_service.MovieService.fecth_all_movies', autospec=True)
+    @patch('services.movie_service.MovieService.fecth_all_movies')
     def test_get_movies_mock_db(self, mock_db_call):
         client = app.test_client()
         resp = client.get('/movies')
