@@ -12,6 +12,8 @@ flask-swagger-ui = "*"
 marshmallow-sqlalchemy = "*"
 pyjwt = "*"
 pycodestyle = "*"
+gunicorn = "*"
+importlib-metadata = "*"
 
 [dev-packages]
 pytest = "*"
