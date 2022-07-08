@@ -78,7 +78,8 @@ class PopulateDB(Resource, MoviesParser):
         created_movies = self.populate_db_with_movies(movies)
         dt = datetime.datetime.now() - t0
         print(f'Done in {dt.total_seconds():.2f} sec.')
-        return {'message': f'Database were populated with {created_movies} movies'}, 201
+        return {'message': f'Database were populated with {created_movies} movies. '
+                           f'Done in {dt.total_seconds():.2f} sec.'}, 201
 
 
 class PopulateDBThreads(Resource, MoviesParser):

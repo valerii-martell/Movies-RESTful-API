@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies API</title>
+</head>
+<body>
+<h1>Movies API</h1>
+<h4>Simple RESTful API for getting and posting movies. Developed using Python, Flask, PostgreSQL, SQLAlchemy.</h4>
+<hr>
+    <h1>Routes index:</h1>
+    <p><a href="/smoke">001. Smoke</a></p>
+    <p><a href="/swagger">002. Swagger</a></p>
+    <p><a href="/movies">003. GET all movies</a>
+        <br>&emsp;Add /uuid to get a particular movie by its uuid in a DB.
+        <br>&emsp;POST, PUT, PATCH and DELETE methods also allowed. Please use f. e. Swagger</p>
+    <p><a href="/actors">004. GET all actors</a>
+        <br>&emsp;Add /uuid to get a particular actor/actress by his/her uuid in the DB.
+        <br>&emsp;POST (requires authentication) and DELETE (requires authorization, admin's token) methods also allowed. Please use f. e. Postman</p>
+    <p><a href="/aggregations">005. GET some aggregated values from the DB using SQLAlchemy</a>
+    <p><a href="/register">006. User registration</a>
+    <p><a href="/login">007. User authentication</a>
+    <hr>
+    <h4>The following section currently doesn't work due the changes in IMDb to avoid parsing.
+    Thus, the parser requires adaptation for another web source.</h4>
+    <form id="populate_db_form" action="/populate/sequentially" method="post">
+      <button value="Submit" type="submit">Parse top 10 movies from IMDb and add them to the DB sequentially</button>
+    </form>
+    <form id="populate_db_t_form" action="/populate/threads" method="post">
+      <button value="Submit" type="submit">Parse top 10 movies from IMDb and add them to the DB using multithreading</button>
+    </form>
+    <form id="populate_db_p_form" action="/populate/processes" method="post">
+      <button value="Submit" type="submit">Parse top 10 movies from IMDb and add them to the DB using multiprocessing</button>
+    </form>
+<script>
+  $('#populate_db_form').on('submit', function(event) {
+    event.preventDefault();
+    let baseHref = window.location.href;
+    $.ajax({
+      type: 'POST',
+      url: window.location.href+"/populate/sequentially",
+      dataType: 'json',
+      contentType: 'application/json',
+      success: function(XMLHttpRequest, textStatus, errorThrown) {
+          alert(JSON.parse(XMLHttpRequest.responseText).message);
+          window.location.href = baseHref;
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+          alert(JSON.parse(XMLHttpRequest.responseText).message);
+          window.location.href = baseHref;
+      }
+    });
+  });
+
+  $('#populate_db_t_form').on('submit', function(event) {
+    event.preventDefault();
+    let baseHref = window.location.href;
+    $.ajax({
+      type: 'POST',
+      url: window.location.href+"/populate/threads",
+      dataType: 'json',
+      contentType: 'application/json',
+      success: function(XMLHttpRequest, textStatus, errorThrown) {
+          alert(JSON.parse(XMLHttpRequest.responseText).message);
+          window.location.href = baseHref;
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+          alert(JSON.parse(XMLHttpRequest.responseText).message);
+          window.location.href = baseHref;
+      }
+    });
+  });
+
+  $('#populate_db_p_form').on('submit', function(event) {
+    event.preventDefault();
+    let baseHref = window.location.href;
+    $.ajax({
+      type: 'POST',
+      url: window.location.href+"/populate/processes",
+      dataType: 'json',
+      contentType: 'application/json',
+      success: function(XMLHttpRequest, textStatus, errorThrown) {
+          alert(JSON.parse(XMLHttpRequest.responseText).message);
+          window.location.href = baseHref;
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+          alert(JSON.parse(XMLHttpRequest.responseText).message);
+          window.location.href = baseHref;
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
