@@ -16,10 +16,10 @@ def get_env_variable(name):
 # POSTGRES_DB = get_env_variable("POSTGRES_DB")
 
 class Config:
-    # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + str(BASE_DIR / 'data' / 'db.sqlite3')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + str(BASE_DIR / 'data' / 'db.sqlite3')
 
-    SQLALCHEMY_DATABASE_URI = 'postgresql://{user}:{pw}@{url}/{db}'.\
-        format(user='postgres',pw='passwd',url='localhost',db='movies_api_db')
+    # SQLALCHEMY_DATABASE_URI = 'postgresql://{user}:{pw}@{url}/{db}'.\
+    #    format(user='postgres',pw='passwd',url='localhost',db='movies_api_db')
 
     # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') \
     #    or 'sqlite:///' + str(BASE_DIR / 'data' / 'db.sqlite3')

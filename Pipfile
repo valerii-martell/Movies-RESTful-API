@@ -18,6 +18,8 @@ psycopg2 = "*"
 bs4 = "*"
 requests = "*"
 psycopg2-binary = "*"
+sanic = "*"
+aiopg = "*"
 
 [dev-packages]
 pytest = "*"
