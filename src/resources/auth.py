@@ -74,3 +74,24 @@ def token_required(func):
         return func(self, *args, **kwargs)
 
     return wrapper
+
+
+def admin_token_required(func):
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        token = request.headers.get('X-API-KEY', '')
+        if not token:
+            return "", 401, {"WWW-Authenticate": "Basic realm='Authentication required'"}
+        try:
+            uuid = jwt.decode(token, app.config['SECRET_KEY'])['user_id']
+        except (KeyError, jwt.ExpiredSignatureError):
+            return "", 401, {"WWW-Authenticate": "Basic realm='Authentication required'"}
+        #user = db.session.query(User).filter_by(uuid=uuid).first()
+        user = User.find_user_by_username(uuid=uuid)
+        if not user:
+            return "", 401, {"WWW-Authenticate": "Basic realm='Authentication required'"}
+        if not user.is_admin:
+            return "Admin's token required", 403
+        return func(self, *args, **kwargs)
+
+    return wrapper
