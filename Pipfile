@@ -17,6 +17,7 @@ importlib-metadata = "*"
 psycopg2 = "*"
 bs4 = "*"
 requests = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 pytest = "*"

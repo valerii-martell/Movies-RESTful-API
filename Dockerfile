@@ -12,4 +12,7 @@ RUN chown -R userapi:userapi ./
 USER userapi
 
 EXPOSE 5000
+# CMD flask db stamp head
+# CMD flask db migrate
+# CMD flask db update
 CMD gunicorn --bind 0.0.0.0:$PORT wsgi:app
