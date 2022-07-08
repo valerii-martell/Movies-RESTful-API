@@ -3,12 +3,11 @@ import datetime
 from flask import request
 from flask_restful import Resource
 from marshmallow import ValidationError
-from sqlalchemy.orm import joinedload, selectinload
+from sqlalchemy.orm import joinedload
 
-from services.movie_service import MovieService
+from src.services.movie_service import MovieService
 from src import db
 from src.database.models import Movie
-from src.resources.auth import token_required
 from src.schemas.movies import MovieSchema
 
 

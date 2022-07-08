@@ -3,7 +3,7 @@
   "info": {
     "description": "Valerii Martell",
     "version": "1.0.0",
-    "title": "Flask Swagger UI Tutorial",
+    "title": "Movies RESTful API in Flask",
     "contact": {
       "email": "valerii.martell@gmail.com"
     },
@@ -20,7 +20,7 @@
   "tags": [
     {
       "name": "Movie Request",
-      "description": "Example API for requesting and return movies requests"
+      "description": "Simple RESTful API for request and return movies"
     }
   ],
   "paths": {

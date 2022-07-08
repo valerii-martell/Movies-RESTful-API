@@ -2,7 +2,7 @@ import datetime
 from functools import wraps
 
 import jwt
-from flask import request, jsonify
+from flask import request, jsonify, render_template, make_response
 from flask_restful import Resource
 from marshmallow import ValidationError
 from sqlalchemy.exc import IntegrityError
@@ -15,6 +15,10 @@ from src.schemas.users import UserSchema
 
 class AuthRegister(Resource):
     user_schema = UserSchema()
+
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('register.html'), 200, headers)
 
     def post(self):
         try:
@@ -47,7 +51,8 @@ class AuthLogin(Resource):
         )
         return jsonify(
             {
-                "token": token.decode('utf-8')
+                "token": token,
+                "expires": datetime.datetime.now() + datetime.timedelta(hours=1)
             }
         )
 

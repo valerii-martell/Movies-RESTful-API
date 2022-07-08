@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies API register</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<form id="register_form" action="/register" method="post">
+  <input type="text" placeholder="Username" name="username" title="Up to 20 alphabetical characters">
+  <br>
+  <input type="email" placeholder="Email" name="email" title="Must be a valid email address">
+  <br>
+  <input type="password" placeholder="Password" name="password" title="Annoying validation skipped">
+  <br>
+  <button value="Submit" type="submit">Register</button>
+</form>
+<script>
+  const serialize_form = form => JSON.stringify(
+    Array.from(new FormData(form).entries())
+       .reduce((m, [ key, value ]) => Object.assign(m, { [key]: value }), {})
+  );
+
+  $('#register_form').on('submit', function(event) {
+    event.preventDefault();
+    const json = serialize_form(this);
+    //console.log(json);
+    $.ajax({
+      type: 'POST',
+      url: window.location.href,
+      dataType: 'json',
+      data: json,
+      contentType: 'application/json',
+      success: function(data) {
+          alert("Hello, " + data.username)
+          let baseHref = window.location.href.substring(0, window.location.href.indexOf("/register"));
+          window.location.href = baseHref + '/login';
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+          alert(JSON.parse(XMLHttpRequest.responseText).message);
+      }
+    });
+  });
+</script>
+</body>
+</html>
