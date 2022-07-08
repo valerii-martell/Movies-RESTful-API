@@ -19,7 +19,7 @@ class FakeMovie:
 class TestMovies:
     uuids = []
 
-    @patch('services.movie_service.MovieService.fecth_all_movies')
+    @patch('src.services.movie_service.MovieService.fecth_all_movies')
     def test_get_movies_mock_db(self, mock_db_call):
         client = app.test_client()
         resp = client.get('/movies')
@@ -76,7 +76,7 @@ class TestMovies:
         assert resp.json['title'] == 'Update Title'
 
     def test_update_movie_with_mock_db(self):
-        with patch('services.movie_service.MovieService.fetch_movie_by_uuid') as mocked_query, \
+        with patch('src.services.movie_service.MovieService.fetch_movie_by_uuid') as mocked_query, \
                 patch('src.db.session.add', autospec=True) as mock_session_add, \
                 patch('src.db.session.commit', autospec=True) as mock_session_commit:
             mocked_query.return_value = FakeMovie()

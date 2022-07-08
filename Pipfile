@@ -14,6 +14,9 @@ pyjwt = "*"
 pycodestyle = "*"
 gunicorn = "*"
 importlib-metadata = "*"
+psycopg2 = "*"
+bs4 = "*"
+requests = "*"
 
 [dev-packages]
 pytest = "*"
