@@ -23,4 +23,10 @@ Unittests realised using Pytest and Coverage.
 - Containerization - Docker
 - Deployment - Heroku
 - Testing - Pytest and Coverage.
+- Linter - pycodestyle
+
+DB structure: https://drawsql.app/kpi-6/diagrams/movies-api-db
+![drawSQL-export-2022-07-10_06_46](https://user-images.githubusercontent.com/19497575/178131742-7ba1e30c-7a54-4b27-97d3-4d049ad33dc4.png)
+
+
 
