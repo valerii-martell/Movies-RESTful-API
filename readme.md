@@ -1,5 +1,12 @@
 # Movies RESTful API
 
+[![Build Status](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/workflow.yml/badge.svg)]()
+[![Pytest and flake8](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/test.yml/badge.svg)](https://github.com/starnowski/posmulten/actions/workflows/posmulten.yml)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.starnowski.posmulten/postgresql-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.starnowski.posmulten%22%20AND%20a:%22postgresql-core%22)
+[![CodeQL](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/codeql.yml/badge.svg)](https://github.com/valerii-martell/Movies-RESTful-API/actions?query=workflow%3ACodeQL)
+
+
+
 https://movies-api-flask.herokuapp.com/
 
 Simple web service for parsing top movies from IMDb and represent them like RESTful API. 

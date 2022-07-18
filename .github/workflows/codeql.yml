@@ -1,12 +1,10 @@
 name: CodeQL
 
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-  # schedule:
-  #  - cron: '56 5 * * 1'
-  workflow_call:
+  workflow_run:
+    workflows: ["Flake8", "Pytest"]
+    types:
+      - completed
 
 jobs:
   analyze:

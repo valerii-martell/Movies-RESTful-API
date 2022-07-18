@@ -1,0 +1,18 @@
+name: Cleanup
+
+on:
+  workflow_run:
+    workflows: ["Deploy to Heroku"]
+    types:
+      - completed
+
+jobs:
+  cleanup:
+    name: Cleanup actions
+    runs-on: ubuntu-latest
+    steps:
+      - name: "♻️ remove build artifacts"
+        uses: geekyeggo/delete-artifact@v1
+        with:
+          name: |
+            docker

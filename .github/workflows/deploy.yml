@@ -1,8 +1,8 @@
-name: Deploy
+name: Deploy to Heroku
 
 on:
   workflow_run:
-    workflows: ["Development"]
+    workflows: ["Docker"]
     types:
       - completed
 
@@ -18,24 +18,12 @@ jobs:
 
       - name: "🚀️ deploy docker container in Heroku"
         uses: akhileshns/heroku-deploy@v3.12.12
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "movies-api-flask"
           heroku_email: "valerii.martell@gmail.com"
           usedocker: true
-
-
-  cleanup:
-    name: Cleanup actions
-    needs:
-      - deploy
-    runs-on: ubuntu-latest
-    steps:
-      - name: "♻️ remove build artifacts"
-        uses: geekyeggo/delete-artifact@v1
-        with:
-          name: |
-            docker
-            deploy
-            
+          remote_branch: main
             
