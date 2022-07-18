@@ -122,4 +122,3 @@ class PopulateDBProcesses(Resource, MoviesParser):
 
         return {'message': f'Database were populated with {created_movies} movies. '
                            f'Done in {dt.total_seconds():.2f} sec.'}, 201
-

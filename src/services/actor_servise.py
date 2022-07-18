@@ -19,5 +19,3 @@ class ActorService:
         session.bulk_save_objects(actors_to_create)
         session.commit()
         return len(actors_to_create)
-
-

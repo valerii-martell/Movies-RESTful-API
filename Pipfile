@@ -20,10 +20,12 @@ requests = "*"
 psycopg2-binary = "*"
 sanic = "*"
 aiopg = "*"
+flake8 = "*"
+wheel = "*"
 
 [dev-packages]
 pytest = "*"
 coverage = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.10"

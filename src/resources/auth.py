@@ -39,7 +39,7 @@ class AuthLogin(Resource):
         auth = request.authorization
         if not auth:
             return "", 401, {"WWW-Authenticate": "Basic realm='Authentication required'"}
-        #user = db.session.query(User).filter_by(username=(auth.get('username', ''))).first()
+        # user = db.session.query(User).filter_by(username=(auth.get('username', ''))).first()
         user = User.find_user_by_username(auth.get('username', ''))
         if not user or not check_password_hash(user.password, auth.get('password', '')):
             return "", 401, {"WWW-Authenticate": "Basic realm='Authentication required'"}
@@ -67,7 +67,7 @@ def token_required(func):
             uuid = jwt.decode(token, app.config['SECRET_KEY'])['user_id']
         except (KeyError, jwt.ExpiredSignatureError):
             return "", 401, {"WWW-Authenticate": "Basic realm='Authentication required'"}
-        #user = db.session.query(User).filter_by(uuid=uuid).first()
+        # user = db.session.query(User).filter_by(uuid=uuid).first()
         user = User.find_user_by_username(uuid=uuid)
         if not user:
             return "", 401, {"WWW-Authenticate": "Basic realm='Authentication required'"}
@@ -86,7 +86,7 @@ def admin_token_required(func):
             uuid = jwt.decode(token, app.config['SECRET_KEY'])['user_id']
         except (KeyError, jwt.ExpiredSignatureError):
             return "", 401, {"WWW-Authenticate": "Basic realm='Authentication required'"}
-        #user = db.session.query(User).filter_by(uuid=uuid).first()
+        # user = db.session.query(User).filter_by(uuid=uuid).first()
         user = User.find_user_by_username(uuid=uuid)
         if not user:
             return "", 401, {"WWW-Authenticate": "Basic realm='Authentication required'"}

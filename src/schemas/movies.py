@@ -11,4 +11,3 @@ class MovieSchema(SQLAlchemyAutoSchema):
         load_instance = True
         include_fk = True
     actors = Nested('ActorSchema', many=True, exclude=('movies',))
-

@@ -19,5 +19,3 @@ class MovieService:
         session.bulk_save_objects(movies_to_create)
         session.commit()
         return len(movies_to_create)
-
-
