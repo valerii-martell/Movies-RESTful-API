@@ -1,5 +1,6 @@
 # Movies RESTful API
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/638324c7268a44e6915c6f9f313300d3)](https://www.codacy.com/gh/valerii-martell/Movies-RESTful-API/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=valerii-martell/Movies-RESTful-API&amp;utm_campaign=Badge_Grade)
 [![Pytest](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/test.yml/badge.svg)](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/test.yml)
 [![Flake8](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/lint.yml/badge.svg)](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/lint.yml)
 [![CodeQL](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/codeql.yml/badge.svg)](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/codeql.yml)
