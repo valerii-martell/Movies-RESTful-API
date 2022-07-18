@@ -1,0 +1,41 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ["Development"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    name: Deploy in Heroku
+    runs-on: ubuntu-latest
+    steps:
+      - name: "☁️ checkout repository"
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: "🚀️ deploy docker container in Heroku"
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "movies-api-flask"
+          heroku_email: "valerii.martell@gmail.com"
+          usedocker: true
+
+
+  cleanup:
+    name: Cleanup actions
+    needs:
+      - deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: "♻️ remove build artifacts"
+        uses: geekyeggo/delete-artifact@v1
+        with:
+          name: |
+            docker
+            deploy
+            
+            
