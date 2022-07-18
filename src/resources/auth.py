@@ -87,7 +87,7 @@ def admin_token_required(func):
         except (KeyError, jwt.ExpiredSignatureError):
             return "", 401, {"WWW-Authenticate": "Basic realm='Authentication required'"}
         # user = db.session.query(User).filter_by(uuid=uuid).first()
-        user = User.find_user_by_username(uuid=uuid)
+        user = User.find_user_by_uuid(uuid=uuid)
         if not user:
             return "", 401, {"WWW-Authenticate": "Basic realm='Authentication required'"}
         if not user.is_admin:

@@ -5,7 +5,7 @@ from flask_restful import Resource
 from marshmallow import ValidationError
 from sqlalchemy.orm import joinedload
 
-from src.resources.auth import token_required, admin_token_required
+# from src.resources.auth import token_required, admin_token_required
 from src.services.movie_service import MovieService
 from src import db
 from src.database.models import Movie

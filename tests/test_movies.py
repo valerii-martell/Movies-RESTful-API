@@ -59,7 +59,7 @@ class TestMovies:
                 'length': 100,
                 'rating': 8.0
             }
-            resp = client.post('/movies', data=json.dumps(data), content_type='application/json')
+            client.post('/movies', data=json.dumps(data), content_type='application/json')
             mock_session_add.assert_called_once()
             mock_session_commit.assert_called_once()
 
@@ -87,7 +87,7 @@ class TestMovies:
                 'distributed_by': 'update',
                 'release_date': '2010-04-01'
             }
-            resp = client.put(url, data=json.dumps(data), content_type='application/json')
+            client.put(url, data=json.dumps(data), content_type='application/json')
             mock_session_add.assert_called_once()
             mock_session_commit.assert_called_once()
 
