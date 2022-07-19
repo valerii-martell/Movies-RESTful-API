@@ -2,7 +2,7 @@ name: CodeQL
 
 on:
   workflow_run:
-    workflows: ["Flake8", "Pytest"]
+    workflows: ["Pytest"]
     types:
       - completed
 
