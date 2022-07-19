@@ -1,8 +1,8 @@
 # Movies RESTful API
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/638324c7268a44e6915c6f9f313300d3)](https://www.codacy.com/gh/valerii-martell/Movies-RESTful-API/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=valerii-martell/Movies-RESTful-API&amp;utm_campaign=Badge_Grade)
-[![Pytest](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/test.yml/badge.svg)](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/test.yml)
 [![Flake8](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/lint.yml/badge.svg)](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/lint.yml)
+[![Pytest](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/test.yml/badge.svg)](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/test.yml)
 [![CodeQL](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/codeql.yml/badge.svg)](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/codeql.yml)
 [![Docker](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/docker.yml/badge.svg)](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/docker.yml)
 [![Deploy](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/deploy.yml/badge.svg)](https://github.com/valerii-martell/Movies-RESTful-API/actions/workflows/deploy.yml)
@@ -11,7 +11,7 @@
 
 https://movies-api-flask.herokuapp.com/
 
-Simple web service for parsing top movies from IMDb and represent them like RESTful API. 
+A simple web service for parsing top movies from IMDb and represent them like RESTful API. 
 Developed using Python, Flask and Sanic frameworks and PostgreSQL database. Deployed on Heroku.
 Supports GET, POST, PUT, PATCH and DELETE methods for Movies and Actors entities. 
 Some of them require tokens, thus user registration, authentication and authorization are also provided. 
