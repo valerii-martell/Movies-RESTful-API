@@ -1,3 +1,5 @@
+import os
+
 import config
 
 from flask import Flask
@@ -7,7 +9,9 @@ from flask_sqlalchemy import SQLAlchemy, get_debug_queries
 from flask_swagger_ui import get_swaggerui_blueprint
 
 
-app = Flask(__name__, template_folder='static/templates')
+app = Flask(__name__,
+            template_folder='static/templates',
+            static_folder='static')
 app.config.from_object(config.Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)

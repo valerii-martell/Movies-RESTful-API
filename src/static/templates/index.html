@@ -1,39 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class=" ukmnbysi idc0_341">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Movies RESTful API title page">
+    <meta name="author" content="Valerii Martell">
+    <link rel="icon" href="https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico">
+
     <title>Movies API</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/jumbotron/">
+    <link href="{{url_for('static', filename='styles/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='styles/jumbotron.css')}}" rel="stylesheet">
 </head>
-<body>
-<h1>Movies API</h1>
-<h4>Simple RESTful API for getting and posting movies. Developed using Python, Flask, PostgreSQL, SQLAlchemy.</h4>
-<hr>
-    <h2>Routes index:</h2>
-    <p><a href="/smoke">001. Smoke</a></p>
-    <p><a href="/swagger">002. Swagger</a></p>
-    <p><a href="/movies">003. GET all movies</a>
-        <br>&emsp;Add /uuid to get a particular movie by its uuid in a DB.
-        <br>&emsp;POST, PUT, PATCH and DELETE methods also allowed. Please use f. e. Swagger</p>
-    <p><a href="/actors">004. GET all actors</a>
-        <br>&emsp;POST (requires authentication) and DELETE (requires authorization, admin's token) methods also allowed. Please use f. e. Postman</p>
-    <p><a href="/aggregations">005. GET some aggregated values from the DB using SQLAlchemy</a>
-    <p><a href="/register">006. User registration</a>
-    <p><a href="/login">007. User authentication</a>
-    <hr>
-    <form id="populate_db_form" action="/populate" method="post">
-      <button value="Submit" type="submit">Populate DB with some pre-defined movies and actors</button>
-    </form>
-    <h4>The following section currently doesn't work due the changes in IMDb to avoid parsing.
-    Thus, the parser requires adaptation for another web source.</h4>
-    <form id="populate_db_s_form" action="/populate/sequentially" method="post">
-      <button value="Submit" type="submit">Parse top 10 movies from IMDb and add them to the DB sequentially</button>
-    </form>
-    <form id="populate_db_t_form" action="/populate/threads" method="post">
-      <button value="Submit" type="submit">Parse top 10 movies from IMDb and add them to the DB using multithreading</button>
-    </form>
-    <form id="populate_db_p_form" action="/populate/processes" method="post">
-      <button value="Submit" type="submit">Parse top 10 movies from IMDb and add them to the DB using multiprocessing</button>
-    </form>
+
+<body data-new-gr-c-s-check-loaded="14.1068.0" data-gr-ext-installed="">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#">Movies API</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/login">Sign in</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/register">Sign up</a>
+            </li>
+        </ul>
+    </div>
+
+</nav>
+
+<main role="main">
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">Movies API</h1>
+            <p>A simple RESTful API for getting and posting movies. Developed using Python, Flask, PostgreSQL.</p>
+            <p><a class="btn btn-success btn-lg" href="/swagger" role="button">Swagger »</a></p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col">
+                <h2>Movies</h2>
+                <p>Get a list of all movies in a DB in json format. </p>
+                <p>Add /{uuid} to URL to get a particular movie by its uuid in the DB. POST, PUT, PATCH and DELETE
+                    methods also allowed and available in Swagger. </p>
+                <p><a class="btn btn-primary" href="/movies" role="button">All movies »</a></p>
+            </div>
+            <div class="col">
+                <h2>Actors</h2>
+                <p>Get a list of all actors in a DB in json format. </p>
+                <p>POST (requires authentication) and DELETE (requires authorization, admin's token) methods also
+                    allowed. Please use f. e. Postman. </p>
+                <p><a class="btn btn-primary" href="/actors" role="button">All actors »</a></p>
+            </div>
+            <div class="col">
+                <h2>Statistics</h2>
+                <p>Get some aggregated values from a DB using SQLAlchemy. </p>
+                <p><a class="btn btn-primary" href="/aggregations" role="button">Show statistics »</a></p>
+            </div>
+            <div class="col">
+                <h2>Populate</h2>
+                <p>Several POST methods for a DB populating. </p>
+                <p>
+                <form id="populate_db_form" action="/populate" method="post">
+                    <button class="btn btn-primary" value="Submit" type="submit" style="color: white">Predefined values »</button>
+                </form>
+                </p>
+                <p>IMDb parsing: </p>
+                <p>
+                <form id="populate_db_s_form" action="/populate/sequentially" method="post">
+                    <button class="btn btn-primary" value="Submit" type="submit" style="color: white">Sequentially »</button>
+                </form>
+                </p>
+                <p>
+                <form id="populate_db_t_form" action="/populate/threads" method="post">
+                    <button class="btn btn-primary" value="Submit" type="submit" style="color: white">Using Threading »</button>
+                </form>
+                </p>
+                <p>
+                <form id="populate_db_p_form" action="/populate/processes" method="post">
+                    <button class="btn btn-primary" value="Submit" type="submit" style="color: white">Using Multiprocessing
+                        »</button>
+                </form>
+                </p>
+            </div>
+        </div>
+
+        <hr>
+
+    </div> <!-- /container -->
+
+</main>
+
+<footer class="container">
+    <p>© Valerii Martell <a href="https://github.com/valerii-martell/Movies-RESTful-API">GitHub</a></p>
+</footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{{url_for('static', filename='scripts/popper.min.js')}}"></script>
+<script src="{{url_for('static', filename='scripts/bootstrap.min.js')}}"></script>
 <script>
     const baseHref = window.location.href;
 
@@ -62,12 +136,11 @@
     }
 
     for (const [key, value] of Object.entries(forms)) {
-        $(key).on('submit', function(event) {
+        $(key).on('submit', function (event) {
             event.preventDefault();
             $.ajax(get_ajax_object(value));
         });
     }
 </script>
-
 </body>
 </html>

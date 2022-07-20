@@ -1,46 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class=" hmlmfoj idc0_341">
 <head>
-    <meta charset="UTF-8">
-    <title>Movies API register</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-</head>
-<body>
-<form id="register_form" action="/register" method="post">
-  <input type="text" placeholder="Username" name="username" title="Up to 20 alphabetical characters">
-  <br>
-  <input type="email" placeholder="Email" name="email" title="Must be a valid email address">
-  <br>
-  <input type="password" placeholder="Password" name="password" title="Annoying validation skipped">
-  <br>
-  <button value="Submit" type="submit">Register</button>
-</form>
-<script>
-  const serialize_form = form => JSON.stringify(
-    Array.from(new FormData(form).entries())
-       .reduce((m, [ key, value ]) => Object.assign(m, { [key]: value }), {})
-  );
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-  $('#register_form').on('submit', function(event) {
-    event.preventDefault();
-    const json = serialize_form(this);
-    //console.log(json);
-    $.ajax({
-      type: 'POST',
-      url: window.location.href,
-      dataType: 'json',
-      data: json,
-      contentType: 'application/json',
-      success: function(data) {
-          alert("Hello, " + data.username)
-          let baseHref = window.location.href.substring(0, window.location.href.indexOf("/register"));
-          window.location.href = baseHref + '/login';
-      },
-      error: function(XMLHttpRequest, textStatus, errorThrown) {
-          alert(JSON.parse(XMLHttpRequest.responseText).message);
-      }
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Movies API Sign up">
+    <meta name="author" content="Valerii Martell">
+    <link rel="icon" href="https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>Sign up</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
+
+    <link href="{{url_for('static', filename='styles/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='styles/signin.css')}}" rel="stylesheet">
+</head>
+
+<body class="text-center" data-new-gr-c-s-check-loaded="14.1068.0" data-gr-ext-installed="">
+<form class="form-signin" id="register_form" action="/register" method="post">
+    <img class="mb-4" src="{{url_for('static', filename='images/bootstrap-solid.svg')}}" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
+    <label for="inputUsername" class="sr-only">Username</label>
+    <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username"
+           title="Up to 20 alphabetical characters" required="" autofocus="">
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address"
+           title="Must be a valid email address" required="">
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password"
+           title="Annoying validation is skipped" required="">
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+    <p class="mt-5 mb-3 text-muted">© Valerii Martell</p>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    const serialize_form = form => JSON.stringify(
+        Array.from(new FormData(form).entries())
+            .reduce((m, [key, value]) => Object.assign(m, {[key]: value}), {})
+    );
+
+    $('#register_form').on('submit', function (event) {
+        event.preventDefault();
+        const json = serialize_form(this);
+        //console.log(json);
+        $.ajax({
+            type: 'POST',
+            url: window.location.href,
+            dataType: 'json',
+            data: json,
+            contentType: 'application/json',
+            success: function (data) {
+                alert("Hello, " + data.username)
+                let baseHref = window.location.href.substring(0, window.location.href.indexOf("/register"));
+                window.location.href = baseHref + '/login';
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(JSON.parse(XMLHttpRequest.responseText).message);
+            }
+        });
     });
-  });
 </script>
+
 </body>
 </html>
+
