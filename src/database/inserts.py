@@ -1,10 +1,10 @@
 from datetime import date
 
 from src import db
-from src.database.models import Movie, Actor
+from src.database.models import Movie, Actor, movies_actors
 
 
-def populate_movies():
+def populate():
     harry_potter_and_ph_stone = Movie(
         title='Harry Potter and the Philosopher\'s Stone',
         release_date=date(2001, 11, 4),
@@ -101,27 +101,42 @@ def populate_movies():
     harry_potter_and_deathly_hallows_2.actors = [daniel_radcliffe, emma_watson, rupert_grint, michael_gambon,
                                                  alan_rickman]
 
-    db.session.add(harry_potter_and_ph_stone)
-    db.session.add(harry_potter_and_ch_s)
-    db.session.add(harry_potter_and_priz_az)
-    db.session.add(harry_potter_and_ph_goblet_fire)
-    db.session.add(harry_potter_and_order_phoenix)
-    db.session.add(harry_potter_and_half_blood_prince)
-    db.session.add(harry_potter_and_deathly_hallows_1)
-    db.session.add(harry_potter_and_deathly_hallows_2)
+    try:
+        db.session.query(Movie).delete()
+        db.session.query(Actor).delete()
+        db.session.query(movies_actors).delete()
+        db.session.commit()
+    except:
+        db.session.rollback()
 
-    db.session.add(daniel_radcliffe)
-    db.session.add(emma_watson)
-    db.session.add(rupert_grint)
-    db.session.add(richard_harris)
-    db.session.add(michael_gambon)
-    db.session.add(alan_rickman)
 
-    db.session.commit()
+    try:
+        db.session.add(harry_potter_and_ph_stone)
+        db.session.add(harry_potter_and_ch_s)
+        db.session.add(harry_potter_and_priz_az)
+        db.session.add(harry_potter_and_ph_goblet_fire)
+        db.session.add(harry_potter_and_order_phoenix)
+        db.session.add(harry_potter_and_half_blood_prince)
+        db.session.add(harry_potter_and_deathly_hallows_1)
+        db.session.add(harry_potter_and_deathly_hallows_2)
+
+        db.session.add(daniel_radcliffe)
+        db.session.add(emma_watson)
+        db.session.add(rupert_grint)
+        db.session.add(richard_harris)
+        db.session.add(michael_gambon)
+        db.session.add(alan_rickman)
+
+        db.session.commit()
+    except:
+        db.session.rollback()
+
     db.session.close()
 
 
 if __name__ == '__main__':
     print('Populating db...')
-    populate_movies()
+    populate()
+    # print(db.session.query(Movie).count())
+    # print(db.session.query(Actor).count())
     print('Successfully populated!')

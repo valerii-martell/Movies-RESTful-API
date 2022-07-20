@@ -20,9 +20,12 @@
     <p><a href="/register">006. User registration</a>
     <p><a href="/login">007. User authentication</a>
     <hr>
+    <form id="populate_db_form" action="/populate" method="post">
+      <button value="Submit" type="submit">Populate DB with some pre-defined movies and actors</button>
+    </form>
     <h4>The following section currently doesn't work due the changes in IMDb to avoid parsing.
     Thus, the parser requires adaptation for another web source.</h4>
-    <form id="populate_db_form" action="/populate/sequentially" method="post">
+    <form id="populate_db_s_form" action="/populate/sequentially" method="post">
       <button value="Submit" type="submit">Parse top 10 movies from IMDb and add them to the DB sequentially</button>
     </form>
     <form id="populate_db_t_form" action="/populate/threads" method="post">
@@ -32,62 +35,38 @@
       <button value="Submit" type="submit">Parse top 10 movies from IMDb and add them to the DB using multiprocessing</button>
     </form>
 <script>
-  $('#populate_db_form').on('submit', function(event) {
-    event.preventDefault();
-    let baseHref = window.location.href;
-    $.ajax({
-      type: 'POST',
-      url: window.location.href+"/populate/sequentially",
-      dataType: 'json',
-      contentType: 'application/json',
-      success: function(XMLHttpRequest, textStatus, errorThrown) {
-          alert(JSON.parse(XMLHttpRequest.responseText).message);
-          window.location.href = baseHref;
-      },
-      error: function(XMLHttpRequest, textStatus, errorThrown) {
-          alert(JSON.parse(XMLHttpRequest.responseText).message);
-          window.location.href = baseHref;
-      }
-    });
-  });
+    const baseHref = window.location.href;
 
-  $('#populate_db_t_form').on('submit', function(event) {
-    event.preventDefault();
-    let baseHref = window.location.href;
-    $.ajax({
-      type: 'POST',
-      url: window.location.href+"/populate/threads",
-      dataType: 'json',
-      contentType: 'application/json',
-      success: function(XMLHttpRequest, textStatus, errorThrown) {
-          alert(JSON.parse(XMLHttpRequest.responseText).message);
-          window.location.href = baseHref;
-      },
-      error: function(XMLHttpRequest, textStatus, errorThrown) {
-          alert(JSON.parse(XMLHttpRequest.responseText).message);
-          window.location.href = baseHref;
-      }
-    });
-  });
+    function get_ajax_object(href_end) {
+        return {
+            type: 'POST',
+            url: window.location.href + href_end,
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(JSON.parse(XMLHttpRequest.responseText).message);
+                window.location.href = baseHref;
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(JSON.parse(XMLHttpRequest.responseText).message);
+                window.location.href = baseHref;
+            }
+        }
+    }
 
-  $('#populate_db_p_form').on('submit', function(event) {
-    event.preventDefault();
-    let baseHref = window.location.href;
-    $.ajax({
-      type: 'POST',
-      url: window.location.href+"/populate/processes",
-      dataType: 'json',
-      contentType: 'application/json',
-      success: function(XMLHttpRequest, textStatus, errorThrown) {
-          alert(JSON.parse(XMLHttpRequest.responseText).message);
-          window.location.href = baseHref;
-      },
-      error: function(XMLHttpRequest, textStatus, errorThrown) {
-          alert(JSON.parse(XMLHttpRequest.responseText).message);
-          window.location.href = baseHref;
-      }
-    });
-  });
+    const forms = {
+        #populate_db_form: "/populate",
+        #populate_db_s_form: "/populate/sequentially",
+        #populate_db_t_form: "/populate/threads",
+        #populate_db_p_form: "/populate/processes"
+    }
+
+    for (const [key, value] of Object.entries(forms)) {
+        $(key).on('submit', function(event) {
+            event.preventDefault();
+            $.ajax(get_ajax_object(value));
+        });
+    }
 </script>
 
 </body>

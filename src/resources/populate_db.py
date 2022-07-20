@@ -6,6 +6,8 @@ import requests
 from flask_restful import Resource
 
 from src import db
+from src.database import inserts
+from src.database.models import Movie, Actor
 from src.services.movie_service import MovieService
 # from concurrent.futures.thread import ThreadPoolExecutor as PoolExecutor
 from concurrent.futures.process import ProcessPoolExecutor as PoolExecutor
@@ -69,7 +71,21 @@ class MoviesParser:
         return minutes
 
 
-class PopulateDB(Resource, MoviesParser):
+class PopulateDB(Resource):
+
+    def post(self):
+        t0 = datetime.datetime.now()
+        inserts.populate()
+        dt = datetime.datetime.now() - t0
+        created_movies = db.session.query(Movie).count()
+        created_actors = db.session.query(Actor).count()
+        db.session.close()
+        print(f'Done in {dt.total_seconds():.2f} sec.')
+        return {'message': f'Database were populated with {created_movies} movies and {created_actors} actors. '
+                           f'Done in {dt.total_seconds():.2f} sec.'}, 201
+
+
+class PopulateDBSequentially(Resource, MoviesParser):
 
     def post(self):
         t0 = datetime.datetime.now()
