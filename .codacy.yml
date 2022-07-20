@@ -2,6 +2,7 @@ engines:
   duplication:
     enabled: true
 exclude_paths:
+  - "**/static/**"
   - "readme.md"
   - "config.py"
   - "Dockerfile"
