@@ -8,13 +8,14 @@ from flask_restful import Resource
 from src import db
 from src.database import inserts
 from src.database.models import Movie, Actor
+from src.resources.auth import admin_token_required
 from src.services.movie_service import MovieService
 # from concurrent.futures.thread import ThreadPoolExecutor as PoolExecutor
 from concurrent.futures.process import ProcessPoolExecutor as PoolExecutor
 
 
 class MoviesParser:
-    url = 'https://www.imdb.com/'
+    url = 'https://imdb.com/'
 
     def get_movies_urls(self):
         print('Getting movie urls', flush=True)
@@ -24,7 +25,7 @@ class MoviesParser:
 
         html = resp.text
         soup = bs4.BeautifulSoup(html, features='html.parser')
-        movie_containers = soup.find_all('td', class_='posterColumn')
+        movie_containers = soup.find_all('td', class_='titleColumn')
         movie_links = [movie.a.attrs['href'] for movie in movie_containers][:10]
 
         return movie_links
@@ -32,21 +33,21 @@ class MoviesParser:
     def parse_movies(self, movie_urls):
         movies_to_create = []
         for url in movie_urls:
-            url = self.url + url
+            url = self.url.replace('imdb', 'pro.imdb') + url
             print(f'Getting a detailed info about the movie - {url}')
             movie_content = requests.get(url)
             movie_content.raise_for_status()
 
             html = movie_content.text
             soup = bs4.BeautifulSoup(html, features="html.parser")
-            title, _ = soup.find('div', class_='originalTitle').text.split('(')
-            rating = float(soup.find('div', class_='ratingValue').strong.text)
-            description = soup.find('div', class_='summary_text').text.strip()
+            title, _ = soup.find('div', id='title_heading').text.split('(')
+            rating = float(soup.find('span', class_='sc-7ab21ed2-1').strong.text)
+            description = soup.find('span', class_='sc-16ede01-0').text.strip()
             title_bar = soup.find('div', class_='titleBar').text.strip()
             title_content = title_bar.split('\n')
             release_date, _ = title_content[-1].split('(')
             release_date = datetime.datetime.strptime(release_date.strip(), '%d %B %Y')
-            length = self._convert_time(soup.find('div', class_='subtext').time.text.strip())
+            length = self._convert_time(soup.find('span', id_='running_time').time.text.strip())
             print(f'Received information about - {title}', flush=True)
             movies_to_create.append(
                 {
@@ -87,6 +88,7 @@ class PopulateDB(Resource):
 
 class PopulateDBSequentially(Resource, MoviesParser):
 
+    @admin_token_required
     def post(self):
         t0 = datetime.datetime.now()
         movies_urls = self.get_movies_urls()
@@ -100,6 +102,7 @@ class PopulateDBSequentially(Resource, MoviesParser):
 
 class PopulateDBThreads(Resource, MoviesParser):
 
+    @admin_token_required
     def post(self):
         threads = []
         movies_to_create = []
@@ -121,6 +124,7 @@ class PopulateDBThreads(Resource, MoviesParser):
 
 class PopulateDBProcesses(Resource, MoviesParser):
 
+    @admin_token_required
     def post(self):
         work = []
         movie_urls = self.get_movie_urls()
