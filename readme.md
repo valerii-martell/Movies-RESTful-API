@@ -9,7 +9,7 @@
 
 
 
-https://movies-api-flask.herokuapp.com/
+https://movies-api-flask.herokuapp.com/ (Heroku may take some time to start)
 
 A simple web service for parsing top movies from IMDb and represent them like RESTful API. 
 Developed using Python language, Flask and Sanic frameworks and PostgreSQL database. Deployed on Heroku.
